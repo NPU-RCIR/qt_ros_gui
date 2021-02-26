@@ -11,3 +11,4 @@ Step 2.
 we need launch pub_mono_cam node in cam package(a sub package in m100_new), not the usb_cam package comes with ros
 
 Step 3.
+1.![result](https://github.com/fjlv520/NPU-RCIR/qt_ros_gui/raw/master/1.png)
