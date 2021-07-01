@@ -74,12 +74,7 @@ void MainWindow::on_checkbox_use_environment_stateChanged(int state) {
 
 void MainWindow::updateLogcamera(const QImage& img_)
 {
-//  std::cout<<"displayMat!!!"<<std::endl;
   qimage = img_.copy();
-  /*这里应该设置中间变量qimage来储存img_，但是.copy()函数一用，程序就crashed，
-   * 不知道是不是qt版本问题,------破案了，最终发现是用ros驱动的摄像头开启程序就会
-   * 闪崩，而用m100_new里的cam包的pub_mono_cam节点发布摄像头就可以
-   */
   qimage_mutex_.lock();
   ui.label_camera->setPixmap(QPixmap::fromImage(qimage));
   ui.label_camera->resize(ui.label_camera->pixmap()->size());
@@ -114,9 +109,9 @@ void cam_turtle_ui::MainWindow::timerEvent(QTimerEvent *event)
     //gnome-terminal打开终端，--geometry 80x8+55+452终端位置大小（终端输入xwininfo，指针变十字，点击终端即可获得终端的位置大小）rosrun turtlesim turtlesim_node
     system("gnome-terminal --geometry 80x24+55--10 -x bash -c 'source /opt/ros/kinetic/setup.bash; rosrun turtlesim turtle_teleop_key'&");
     //rosrun turtlesim turtle_teleop_key
-    //system("gnome-terminal --geometry 80x24+55+14 -x bash -c 'source /opt/ros/kinetic/setup.bash; roslaunch usb_cam usb_cam-test.launch'&");
+    system("gnome-terminal --geometry 80x24+55+14 -x bash -c 'source /opt/ros/kinetic/setup.bash; roslaunch usb_cam usb_cam-test.launch'&");
     //roslaunch usb_cam usb_cam-test.launch 程序会闪崩
-    system("gnome-terminal --geometry 80x24+55+14 -x bash -c 'source ~/m100_new/devel/setup.bash; roslaunch cam pub_mono_cam.launch'&");
+//     system("gnome-terminal --geometry 80x24+55+14 -x bash -c 'source ~/m100_new/devel/setup.bash; roslaunch cam pub_mono_cam.launch'&");
     //改用cam包的pub_mono_cam节点发布摄像头message
     break;
   case 3:
