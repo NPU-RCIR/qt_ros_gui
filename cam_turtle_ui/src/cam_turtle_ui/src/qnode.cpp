@@ -49,8 +49,8 @@ bool QNode::init() {
 	ros::NodeHandle n;
 	// Add your ros communications here.
     image_transport::ImageTransport it(n);
-//    image_sub = it.subscribe("usb_cam/image_raw",1000,&QNode::myCallback_img,this);//相机尝试
-    image_sub = it.subscribe("camera_BGR",1000,&QNode::myCallback_img,this);
+    image_sub = it.subscribe("usb_cam/image_raw",1000,&QNode::myCallback_img,this);//相机尝试
+//     image_sub = it.subscribe("camera_BGR",1000,&QNode::myCallback_img,this);
     chatter_sub = n.subscribe<turtlesim::Pose>("turtle1/pose",1000,&QNode::chatterCallback,this); //新加-订阅的话题以及回调函数
     std::cout<<"init()"<<std::endl;
 	start();
@@ -69,8 +69,8 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	ros::NodeHandle n;
     image_transport::ImageTransport it(n);
 	// Add your ros communications here.
-//    image_sub = it.subscribe("usb_cam/image_raw",1000,&QNode::myCallback_img,this);//相机尝试
-    image_sub = it.subscribe("camera_BGR",1000,&QNode::myCallback_img,this);
+   image_sub = it.subscribe("usb_cam/image_raw",1000,&QNode::myCallback_img,this);//相机尝试
+//     image_sub = it.subscribe("camera_BGR",1000,&QNode::myCallback_img,this);
     chatter_sub = n.subscribe<turtlesim::Pose>("turtle1/pose",1000,&QNode::chatterCallback,this);//新加-订阅的话题以及回调函数
     std::cout<<"init(string string)"<<std::endl;
 	start();
@@ -101,7 +101,7 @@ void QNode::myCallback_img(const sensor_msgs::ImageConstPtr &msg)
   try
   {
 //    cv::imshow("gui_subscriber", cv_bridge::toCvShare(msg, "bgr8")->image);
-    cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
+    cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::RGB8);
     img = cv_ptr->image;
     //QImage image(conversion_mat_.data, conversion_mat_.cols, conversion_mat_.rows, conversion_mat_.step[0], QImage::Format_RGB888);
     image = QImage(img.data,img.cols,img.rows,img.step[0],QImage::Format_RGB888);
